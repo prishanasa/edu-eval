@@ -1,0 +1,4 @@
+student_name,question,student_answer
+Alice,What is RAG?,RAG stands for Retrieval Augmented Generation. It retrieves relevant documents and uses them to answer questions accurately.
+Bob,What is FAISS?,FAISS is a library by Meta for efficient similarity search over large vector databases.
+Charlie,Explain LLMs,Large Language Models are deep learning models trained on massive text data to generate human-like responses.
