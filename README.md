@@ -140,3 +140,11 @@ Bob,Explain FAISS,FAISS is a library for efficient similarity search...
 =======
 Emerging tools Lab Work
 >>>>>>> 1a2b3350ade651a153a44dbc49d1cb094333612d
+
+## Model Selection
+The system uses **Groq LLaMA-3.3 70B Versatile** for evaluation because:
+- Free to use via Groq API
+- Evaluates answers in under 2 seconds
+- Produces consistent structured JSON output
+- Strong reasoning capability for concept extraction
+- Outperforms smaller models on rubric-based scoring tasks
