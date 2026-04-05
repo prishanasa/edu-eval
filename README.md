@@ -9,7 +9,6 @@
 > An intelligent system that automatically evaluates descriptive student answers using RAG, FAISS vector search, and LLaMA-3.3 — delivering marks, grade, concept analysis, and feedback in under 2 seconds.
 
 🚀 **Live Demo:** https://edueval-ai.streamlit.app
-📁 **Author:** Prisha Nasa | Manipal University Jaipur
 
 ---
 
