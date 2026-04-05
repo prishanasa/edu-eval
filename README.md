@@ -112,9 +112,8 @@ Bob,Explain FAISS,FAISS is a library for efficient similarity search...
 |--------|-------|
 | Pearson Correlation AI vs Human | 0.9219 |
 | Within 1 Mark Agreement | 100% |
-| Grade Match Accuracy | 84.0% |
-| Linear Regression R2 | 0.9140 |
-| Best ML Model | Random Forest 72% accuracy |
+| Linear Regression R2 | 0.7940 |
+| Best ML Model | Random Forest 92% accuracy |
 
 ---
 
