@@ -1,150 +1,127 @@
-<<<<<<< HEAD
-# 🎓 AI-Based Academic Answer Evaluation System
+# 🎓 EduEval AI — Academic Answer Evaluation System
 
-> Powered by **RAG · FAISS · Groq LLaMA-3 · Sentence Transformers · Streamlit**
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.35-red)
+![FAISS](https://img.shields.io/badge/FAISS-Vector_DB-green)
+![Groq](https://img.shields.io/badge/Groq-LLaMA_3.3-purple)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
----
+> An intelligent system that automatically evaluates descriptive student answers using RAG, FAISS vector search, and LLaMA-3.3 — delivering marks, grade, concept analysis, and feedback in under 2 seconds.
 
-## 🚀 Quick Start (5 Minutes)
-
-### Step 1 — Get a FREE Groq API Key
-1. Go to [https://console.groq.com](https://console.groq.com)
-2. Sign up (free) → API Keys → Create Key
-3. Copy the key
-
-### Step 2 — Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### Step 3 — Set Your API Key
-```bash
-# Option A: Create a .env file
-cp .env.example .env
-# Edit .env and paste your key
-
-# Option B: Just paste it in the app's sidebar (no file needed)
-```
-
-### Step 4 — Run the App
-```bash
-streamlit run app.py
-```
-
-Open [http://localhost:8501](http://localhost:8501) in your browser.
+🚀 **Live Demo:** https://edueval-ai.streamlit.app
+📁 **Author:** Prisha Nasa | Manipal University Jaipur
 
 ---
 
-## 📁 Project Structure
+## 📌 What It Does
 
-```
-answer_evaluator/
-│
-├── app.py              ← Main Streamlit UI
-├── rag_engine.py       ← FAISS vector DB + RAG retrieval
-├── evaluator.py        ← Groq LLM evaluation logic
-├── requirements.txt    ← All dependencies
-├── .env.example        ← API key template
-│
-├── uploaded_pdfs/      ← Auto-created when you upload PDFs
-└── vector_store/       ← Auto-created FAISS index + metadata
-    ├── faiss.index
-    └── metadata.pkl
-```
+EduEval AI lets faculty upload their marking criteria as a PDF. When a student answer is submitted, the system retrieves the most relevant chunks from the syllabus using FAISS vector search and passes them to a Large Language Model for evaluation. The result includes marks, grade, concepts covered, concepts missing, strengths, weaknesses, detailed feedback, and a model answer.
 
 ---
 
 ## 🏗️ System Architecture
-
-```
-OFFLINE (one-time setup):
-  Syllabus PDFs → Text Extraction → Chunking → Sentence Embeddings → FAISS Index
-
-ONLINE (per evaluation):
-  Question + Student Answer
-        ↓
-  Embed Question → FAISS Search → Top-K Relevant Chunks
-        ↓
-  Prompt = [System Prompt] + [Question] + [Answer] + [Retrieved Context]
-        ↓
-  Groq LLaMA-3 70B
-        ↓
-  Marks | Grade | Concepts Covered/Missing | Feedback | Model Answer
-```
-
 ---
 
-## ✨ Features
+## Features
 
 | Feature | Description |
 |---------|-------------|
-| **PDF Knowledge Base** | Upload any syllabus or textbook PDF |
-| **Semantic Retrieval** | FAISS finds the most relevant reference chunks |
-| **AI Evaluation** | LLM scores based on concept coverage & correctness |
-| **Explainable Results** | Covered concepts, missing concepts, strengths, weaknesses |
-| **Model Answer** | Suggested improved answer for student learning |
-| **Batch Mode** | Evaluate entire class via CSV upload |
-| **Persistent Index** | FAISS index saved to disk — survives app restarts |
+| PDF Knowledge Base | Upload any syllabus, marking scheme, or textbook PDF |
+| Semantic Retrieval | FAISS finds the most relevant reference chunks per question |
+| LLM Evaluation | LLaMA-3.3 70B produces rubric-aligned marks and feedback |
+| Explainable Results | Concepts covered, concepts missing, strengths, weaknesses |
+| Model Answer | AI-generated model answer for student learning |
+| Batch Evaluation | Evaluate entire class via CSV upload |
+| Persistent Index | FAISS index saved to disk — survives app restarts |
+| Score Visualization | Plotly gauge chart with colour-coded grade |
 
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Role |
+|-----------|------|
+| Python 3.11 | Core language |
+| Streamlit | Web UI |
+| Groq API LLaMA-3.3 70B | LLM evaluation engine |
+| FAISS IndexFlatIP | Vector similarity search |
+| Sentence Transformers all-MiniLM-L6-v2 | Text embeddings 384-dim |
+| PyMuPDF | PDF text extraction |
+| LangChain Text Splitters | Intelligent chunking |
+| Plotly | Score gauge visualization |
+| Pandas | Batch evaluation and data handling |
+
+---
+
+## 🚀 Quick Start
+
+### Step 1 — Get a FREE Groq API Key
+Go to https://console.groq.com → Sign up → API Keys → Create Key
+
+### Step 2 — Set up environment
+```bash
+conda create -n evaluator python=3.11 -y
+conda activate evaluator
+conda install -c conda-forge faiss-cpu -y
+pip install -r requirements.txt
+```
+
+### Step 3 — Run the app
+```bash
+streamlit run app.py
+```
+
+Open http://localhost:8501 and paste your Groq API key in the sidebar.
+
+---
+
+## 📁 Project Structure
 ---
 
 ## 📊 How Evaluation Works
 
-The LLM receives:
-1. The **question**
-2. The **student's answer**
-3. **Reference context** retrieved from your uploaded PDFs via semantic search
+The system sends three things to the LLM:
+1. The question
+2. The student answer
+3. Retrieved context from uploaded PDFs via FAISS
 
-It then returns a structured JSON with:
-- `marks_awarded` (out of 10)
-- `grade` (A+ to F)
-- `concepts_covered` — what the student got right
-- `concepts_missing` — gaps in the answer
-- `strengths` — positives
-- `weaknesses` — areas to improve
-- `detailed_feedback` — 2-4 sentence constructive feedback
-- `improved_answer` — a model answer the student can learn from
-
----
-
-## 🛠️ Technologies Used
-
-| Technology | Version | Role |
-|-----------|---------|------|
-| Python | 3.10+ | Core language |
-| Streamlit | 1.35 | Web UI |
-| Groq API (LLaMA-3 70B) | latest | LLM evaluation |
-| FAISS | 1.8 | Vector similarity search |
-| Sentence Transformers | 3.0 | Text embeddings |
-| PyMuPDF | 1.24 | PDF text extraction |
-| LangChain Text Splitters | 0.2 | Intelligent text chunking |
-| Plotly | 5.22 | Score visualization |
+The LLM returns:
+- marks_awarded — score out of configured maximum
+- grade — A+ to F
+- concepts_covered — what the student got right
+- concepts_missing — gaps in the answer
+- strengths — positive aspects
+- weaknesses — areas to improve
+- detailed_feedback — constructive written feedback
+- improved_answer — model answer the student can learn from
 
 ---
 
-## 💡 Tips for Best Results
-
-1. **Upload relevant PDFs** — the more specific your syllabus material, the better the evaluation
-2. **Clear questions** — specific questions yield better context retrieval
-3. **Chunk quality** — the system uses 500-char chunks with 100-char overlap for optimal retrieval
-
----
-
-## 📝 Sample CSV Format (Batch Mode)
-
+## 📦 Batch Evaluation CSV Format
 ```csv
 student_name,question,student_answer
 Alice,What is RAG?,RAG stands for Retrieval Augmented Generation...
 Bob,Explain FAISS,FAISS is a library for efficient similarity search...
 ```
-=======
-Emerging tools Lab Work
->>>>>>> 1a2b3350ade651a153a44dbc49d1cb094333612d
 
-## Model Selection
-The system uses **Groq LLaMA-3.3 70B Versatile** for evaluation because:
-- Free to use via Groq API
-- Evaluates answers in under 2 seconds
-- Produces consistent structured JSON output
-- Strong reasoning capability for concept extraction
-- Outperforms smaller models on rubric-based scoring tasks
+---
+
+## 📈 ML Accuracy Evaluation Results
+
+| Metric | Value |
+|--------|-------|
+| Pearson Correlation AI vs Human | 0.9219 |
+| Within 1 Mark Agreement | 100% |
+| Grade Match Accuracy | 84.0% |
+| Linear Regression R2 | 0.9140 |
+| Best ML Model | Random Forest 72% accuracy |
+
+---
+
+## 🔮 Future Scope
+
+- Supabase database integration for permanent student result storage
+- OCR module for scanned handwritten answer sheets
+- Multi-language support
+- Direct ePAD system API integration
+- Plagiarism detection module
